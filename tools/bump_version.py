@@ -3,8 +3,6 @@ import os
 import toml
 from pkg_resources import parse_version
 
-# Exception: The ref refs/pull/55/merge is not valid.
-
 
 def bump_version_from_ref() -> None:
     """Bumps the version property inside pyproject.toml."""

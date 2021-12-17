@@ -4,7 +4,7 @@ from itertools import cycle
 from typing import Any, MutableMapping
 
 import click
-from azure.keyvault.secrets import SecretProperties
+from azure.containerregistry import RepositoryProperties
 from click import Path
 from textual.app import App
 from textual.keys import Keys
@@ -12,30 +12,29 @@ from textual.reactive import Reactive
 from textual.widget import Widget
 
 from . import __version__
-from .azure import KeyVault
+from .azure import ContainerRegistry
 from .config import CLI_HELP, get_config
 from .widgets import (
     FlashWidget,
     HeaderWidget,
     HelpWidget,
+    RepositoriesWidget,
     SearchWidget,
-    SecretPropertiesWidget,
-    SecretsWidget,
-    SecretVersionsWidget,
     ShowFlashNotification,
+    TagPropertiesWidget,
+    TagsWidget,
 )
 
 
-class KeyVaultBrowser(App):
+class ACRBrowser(App):
 
     config_path: str | None = None
     config: MutableMapping[str, Any]
-    client: KeyVault
-    reveal_secret_value: Reactive[bool] = Reactive(False)
+    client: ContainerRegistry
     show_help: Reactive[bool] = Reactive(False)
-    selected_version: Reactive[SecretProperties] = Reactive(None)
-    selected_secret: Reactive[str] = Reactive("")
-    searchable_nodes: Reactive[list[SecretProperties]] = Reactive([])
+    selected_tag: Reactive[RepositoryProperties] = Reactive(None)
+    selected_repo: Reactive[str] = Reactive("")
+    searchable_nodes: Reactive[list[RepositoryProperties]] = Reactive([])
     search_result: Reactive[list[str]] = Reactive([])
     widget_list: cycle[Widget] = cycle([])
 
@@ -43,8 +42,8 @@ class KeyVaultBrowser(App):
         """Overrides on_load from App()"""
 
         self.config = get_config(self.config_path)
-        keyvault = self.config["keyvault"]
-        self.client = KeyVault(vault_name=keyvault)
+        acr_name = self.config["registry"]
+        self.client = ContainerRegistry(acr_name=acr_name)
 
         await self.bind("?", "toggle_help", "show help")
         await self.bind("ctrl+i", "cycle_widget", show=False)
@@ -54,24 +53,24 @@ class KeyVaultBrowser(App):
     async def on_mount(self) -> None:
         """Overrides on_mount from App()"""
 
-        await self.view.dock(HeaderWidget(), size=7)
+        await self.view.dock(HeaderWidget(), size=5)
 
         self.search = SearchWidget()
         await self.view.dock(self.search, size=3)
 
         grid = await self.view.dock_grid()
-        grid.add_column(name="secrets")
-        grid.add_column(name="versions")
+        grid.add_column(name="repositories")
+        grid.add_column(name="tags")
         grid.add_column(name="properties")
         grid.add_row(name="content")
 
-        self.secrets = SecretsWidget()
-        grid.place(self.secrets)
+        self.repositories = RepositoriesWidget()
+        grid.place(self.repositories)
 
-        self.versions = SecretVersionsWidget()
-        grid.place(self.versions)
+        self.tags = TagsWidget()
+        grid.place(self.tags)
 
-        self.properties = SecretPropertiesWidget()
+        self.properties = TagPropertiesWidget()
         grid.place(self.properties)
 
         self.flash = FlashWidget()
@@ -81,7 +80,7 @@ class KeyVaultBrowser(App):
         await self.view.dock(self.help, z=1)
 
         self.widget_list = cycle(
-            [self.search, self.secrets, self.versions, self.properties]
+            [self.search, self.repositories, self.tags, self.properties]
         )
 
         await self.app.set_focus(self.search)
@@ -131,7 +130,7 @@ class KeyVaultBrowser(App):
         """Refocus the app."""
 
         if self.search.has_focus:
-            await self.versions.clear()
+            await self.tags.clear()
             await self.properties.clear()
             await self.search.clear()
         else:
@@ -143,9 +142,9 @@ class KeyVaultBrowser(App):
 @click.option(
     "--config",
     default=None,
-    envvar="AZURE_KEYVAULT_BROWSER_CONFIG",
+    envvar="ACR_BROWSER_CONFIG",
     type=Path(file_okay=True, dir_okay=False, exists=False, resolve_path=True),
-    help="Explicitly override the config that will be used by azure-keyvault-browser.",
+    help="Explicitly override the config that will be used by acr-browser.",
 )
 @click.option(
     "--debug",
@@ -161,10 +160,10 @@ def run(config: str | None, debug: bool) -> None:
         debug (bool): Enable debug mode.
     """
 
-    title = "Azure Key Vault Browser"
-    app = KeyVaultBrowser
+    title = "ACR Browser"
+    app = ACRBrowser
     app.config_path = config
     if debug:
-        app.run(log="azure-keyvault-browser.log", title=title)
+        app.run(log="acr-browser.log", title=title)
     else:
         app.run()

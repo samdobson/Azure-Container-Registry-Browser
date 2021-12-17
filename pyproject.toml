@@ -1,8 +1,8 @@
 [tool.poetry]
-name = "azure-keyvault-browser"
-version = "0.0.1"
-description = "A tool for browsing and searching for secrets in Azure Key Vault"
-authors = ["Craig Gumbley <craiggumbley@gmail.com>"]
+name = "acr-browser"
+version = "1.0.0"
+description = "A terminal user interface for managing artifacts in Azure Container Registry"
+authors = ["Sam Dobson <1309834+samdobson@users.noreply.github.com>"]
 license = "MIT"
 
 [tool.mypy]
@@ -22,7 +22,7 @@ textual-inputs = "^0.1.2"
 click = "^8.0.3"
 validators = "^0.18.2"
 azure-identity = "^1.7.1"
-azure-keyvault-secrets = "^4.3.0"
+azure-containerregistry = "^1.0.0b7"
 pyperclip = "^1.8.2"
 aiohttp = "^3.8.1"
 
@@ -37,7 +37,7 @@ darglint = "^1.8.1"
 flake8 = "^4.0.1"
 
 [tool.poetry.scripts]
-kv = "azure_keyvault_browser.app:run"
+acr = "acr_browser.app:run"
 
 [tool.poetry.dependencies.fast-autocomplete]
 extras = [ "pylev",]

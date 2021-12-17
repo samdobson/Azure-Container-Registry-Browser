@@ -5,10 +5,9 @@ textual.log
 dist
 .mypy_cache
 .DS_Store
+.python-version
 
 textual.log
 
-.terraform
 *.lock.hcl
 *.lock.info
-terraform.tfstate

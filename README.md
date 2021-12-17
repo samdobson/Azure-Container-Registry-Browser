@@ -1,39 +1,37 @@
 <!-- markdownlint-disable MD026 -->
-# azure-keyvault-browser :lock:
+# acr-browser
 
-![azure-keyvault-browser](https://github.com/chelnak/azure-keyvault-browser/actions/workflows/ci.yaml/badge.svg) [![PyPI version](https://badge.fury.io/py/azure-keyvault-browser.svg)](https://badge.fury.io/py/azure-keyvault-browser)
+![acr-browser](https://github.com/samdobson/acr-browser/actions/workflows/ci.yaml/badge.svg) [![PyPI version](https://badge.fury.io/py/acr-browser.svg)](https://badge.fury.io/py/acr-browser)
 
-`azure-keyvault-browser` is a tool for browsing and searching for secrets in Azure Key Vault.
+`acr-browser` is a terminal-based user interface for managing container images and artifacts in Azure Container Registry.
 
-> :construction: :warning: This app is a prototype and in very early stages of development. There will be bugs, bad UX and missing functionality.
+![home_view](media/interface.png)
 
-![home_view](media/kvb.png)
+:rocket: This project owes a huge debt of gratitude to the fantastic [Azure Key Vault Browser](https://github.com/chelnak/azure-keyvault-browser), from which it is forked, and of course, to the underlying technologies that make both of these projects possible: [textual](https://github.com/willmcgugan/textual) and [rich](https://github.com/willmcgugan/rich)!
 
-:rocket: This project is powered by [textual](https://github.com/willmcgugan/textual) and [rich](https://github.com/willmcgugan/rich)!
+## Installation
 
-## Installation and Configuration
-
-`azure-keyvault-browser` is available on [pypi.org](https://pypi.org)!
+`acr-browser` requires Python 3.9 or later.
 
 ```bash
-pip install azure-keyvault-browser
+pip install acr-browser
 ```
 
-Once the app is installed you can run it from your terminal with the `kv` command.
+Once the app is installed you can run the application from your terminal with the `acr` command.
 
 ```bash
-kv
+acr
 ```
 
-Alternatively, you can run the app with docker to keep your local dependencies squeaky clean 🧹
+Alternatively, you can run with Docker:
 
 ```bash
-docker run --rm -it --volume $HOME:/app --volume $HOME/.azure:/root/.azure ghcr.io/chelnak/azure-keyvault-browser:latest
+docker run --rm -it --volume $HOME:/app --volume $HOME/.azure:/root/.azure ghcr.io/samdobson/acr-browser:latest
 ```
 
 ### Authentication
 
-`azure-keyvault-browser` uses azure cli authentication. Before you use the app ensure that you have logged in and set your subscription.
+`acr-browser` uses the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/) for authentication. Before using the app, make sure that you have logged in and set your subscription.
 
 ```bash
 az login
@@ -44,21 +42,22 @@ az account set --subscription "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx"
 
 On first run you will be asked for some information so that the app can build your configuration file.
 
-You'll need to enter a valid Key Vault name.
+You'll need to enter a valid Azure Container Registry name.
 
-Alternatively you can manually pre-load a config file at `~/.azure-keyvault-browser.toml` and use the following schema:
+Alternatively you can create a config file at `~/.acr-browser.toml`:
 
 ```bash
-# .azure-keyvault-browser.toml
+# .acr-browser.toml
 
-keyvault = ""
+registry = ""
 ```
 
 ## Compatibility
 
-This project has been tested on macOS and Linux (Arch, Ubuntu 20.04 and above) with Python 3.9 installed. It will likely work on any Linux distribution where Python 3.9 or above is available.
+This project has been tested on macOS and Linux with Python 3.9.
+
 For Ubuntu 20.04, it may be necessary to install the `python3.9` package.
 
 ## Contributing
 
-If you would like to contribute to `azure-keyvault-browser` head over to the [contributing guide](CONTRIBUTING.md) to find out more!
+If you would like to contribute to `acr-browser` head over to the [contributing guide](CONTRIBUTING.md) to find out more.

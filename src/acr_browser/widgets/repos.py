@@ -9,12 +9,12 @@ from textual.reactive import Reactive, watch
 from textual.widget import Widget
 
 from .. import styles
-from ..azure import KeyVault, SecretProperties
-from ..renderables import SecretVersionsTableRenderable
+from ..azure import ContainerRegistry, RepositoryProperties
+from ..renderables import ReposTableRenderable
 
 
-class SecretVersionsWidget(Widget):
-    """A secret versions widget. Used to display versions of a secret."""
+class RepositoriesWidget(Widget):
+    """A repositories details widget. Used to display repositories."""
 
     has_focus: Reactive[bool] = Reactive(False)
 
@@ -22,15 +22,13 @@ class SecretVersionsWidget(Widget):
     row: int = 0
 
     def __init__(self) -> None:
-        """A secret versions widget. Used to display versions of a secret."""
+        """A repositories details widget. Used to display repositories."""
 
         name = self.__class__.__name__
         super().__init__(name=name)
-        self.versions: list[SecretProperties] = []
-        self.version_map: dict[str, SecretProperties] = {}
-        self.renderable: SecretVersionsTableRenderable | None = None
-        self.reveal: bool
-        self.client: KeyVault = self.app.client
+        self.repositories: list[RepositoryProperties] = []
+        self.renderable: ReposTableRenderable | None = None
+        self.client: ContainerRegistry = self.app.client
 
     def on_focus(self) -> None:
         """Sets has_focus to true when the item is clicked."""
@@ -45,27 +43,27 @@ class SecretVersionsWidget(Widget):
     async def on_mount(self) -> None:
         """Actions that are executed when the widget is mounted."""
 
-        watch(self.app, "selected_secret", self.update)
+        self.repositories = await self.client.get_repositories()
+        self.app.searchable_nodes = self.repositories
 
-    async def clear(self) -> None:
-        """Clears the widget."""
+        watch(self.app, "search_result", self.update)
 
-        self.versions = []
-        self.renderable = None
-        self.refresh(layout=True)
-
-    async def update(self, secret_name: str) -> None:
-        """Updates the widget with new job info.
+    async def update(self, search_result: list[str]) -> None:
+        """Update the widget with the search result.
 
         Args:
-            secret_name (str): The secret name.
+            search_result (list[str]): A list of repository names that match the search.
         """
 
-        if secret_name:
-            self.versions = await self.client.get_secret_versions(secret_name)
-            self.version_map = {v.version: v for v in self.versions}
-            await self.app.set_focus(self)
-
+        if len(search_result) > 0:
+            if search_result[0] == "none":
+                self.repositories = self.app.searchable_nodes
+            else:
+                self.repositories = [
+                    x for x in self.repositories if x.lower() in search_result
+                ]
+        else:
+            self.repositories = self.app.searchable_nodes
         self.refresh(layout=True)
 
     def on_key(self, event: events.Key) -> None:
@@ -75,15 +73,18 @@ class SecretVersionsWidget(Widget):
             event (events.Key): The event containing the pressed key.
         """
 
-        if self.renderable is None or len(self.versions) == 0:
+        if self.renderable is None:
             return
 
         key = event.key
-        if key == Keys.Enter:
-            row = self.renderable.get_cell_value(0, self.row)
-            self.app.selected_version = self.version_map[str(row)]
 
-        elif key == Keys.Left:
+        if key == Keys.Enter:
+
+            row = self.renderable.get_cell_value(0, self.row)
+            self.app.selected_repo = row
+            self.app.selected_tag = ""
+
+        if key == Keys.Left:
             self.renderable.previous_page()
         elif key == Keys.Right:
             self.renderable.next_page()
@@ -99,11 +100,11 @@ class SecretVersionsWidget(Widget):
         self.refresh(layout=True)
 
     def render_table(self) -> None:
-        """Render the table."""
+        """Renders the build history table."""
 
-        self.renderable = SecretVersionsTableRenderable(
-            items=self.versions or [],
-            title="versions",
+        self.renderable = ReposTableRenderable(
+            items=self.repositories,
+            title="repositories",
             page_size=self.size.height - 5,
             page=self.page,
             row=self.row,
@@ -121,7 +122,7 @@ class SecretVersionsWidget(Widget):
             self.row = self.renderable.row
 
         self.render_table()
-        assert isinstance(self.renderable, SecretVersionsTableRenderable)
+        assert isinstance(self.renderable, ReposTableRenderable)
         return Panel(
             renderable=self.renderable,
             title=f"[{styles.GREY}]( {self.renderable.title} )[/]",
