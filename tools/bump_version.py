@@ -1,7 +1,7 @@
 import os
 
-import toml
-from pkg_resources import parse_version
+import toml  # type: ignore
+from pkg_resources import parse_version  # type: ignore
 
 
 def bump_version_from_ref() -> None:

@@ -4,7 +4,7 @@ import os
 import re
 from typing import Any, MutableMapping
 
-import toml
+import toml  # type: ignore
 from rich.console import Console
 from validators.utils import validator
 
