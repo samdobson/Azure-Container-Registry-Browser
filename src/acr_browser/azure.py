@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from azure.containerregistry import ArtifactTagProperties
 from azure.containerregistry.aio import ContainerRegistryClient
 from azure.identity.aio import AzureCliCredential

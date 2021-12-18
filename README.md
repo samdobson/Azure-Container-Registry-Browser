@@ -1,7 +1,9 @@
 <!-- markdownlint-disable MD026 -->
 # acr-browser
 
-![acr-browser](https://github.com/samdobson/acr-browser/actions/workflows/ci.yaml/badge.svg) [![PyPI version](https://badge.fury.io/py/acr-browser.svg)](https://badge.fury.io/py/acr-browser)
+https://shields.io/pypi/pyversions/acr-browser
+[![Python versions](https://shields.io/pypi/pyversions/acr-browser)](https://badge.fury.io/py/acr-browser)
+[![PyPI version](https://badge.fury.io/py/acr-browser.svg)](https://pypi.org/project/acr-browser/)
 
 `acr-browser` is a terminal-based user interface for managing container images and artifacts in Azure Container Registry.
 
@@ -51,12 +53,6 @@ Alternatively you can create a config file at `~/.acr-browser.toml`:
 
 registry = ""
 ```
-
-## Compatibility
-
-This project has been tested on macOS and Linux with Python 3.9.
-
-For Ubuntu 20.04, it may be necessary to install the `python3.9` package.
 
 ## Contributing
 

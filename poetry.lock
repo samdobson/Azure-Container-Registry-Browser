@@ -648,10 +648,17 @@ version = "0.1.2"
 description = "textual-inputs is a collection of input widgets for the Textual TUI framework"
 category = "main"
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.7"
+develop = false
 
 [package.dependencies]
 textual = ">=0.1.10"
+
+[package.source]
+type = "git"
+url = "https://github.com/samdobson/textual-inputs.git"
+reference = "main"
+resolved_reference = "7d05567a8d4df905b6f32a1d349044236fccb92b"
 
 [[package]]
 name = "toml"
@@ -755,7 +762,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "df0c645e02f1d07c83284f43b862e47ce7c649408781cf0e2c7aab2d574f418c"
+content-hash = "11112dce410ca3984290eeaed4ccde618b289bd0d2460cbd5497aae75eb6fc5e"
 
 [metadata.files]
 aiohttp = [
@@ -1314,10 +1321,7 @@ textual = [
     {file = "textual-0.1.12-py3-none-any.whl", hash = "sha256:2f95e9cc06cf53320a25986dcb4bd751b1e14fba781308e69fbaec3b8a652477"},
     {file = "textual-0.1.12.tar.gz", hash = "sha256:fa70b9f2fe43819afeea64dff355aee1610e1d55e9915df1cef5b0d6f86cb20d"},
 ]
-textual-inputs = [
-    {file = "textual-inputs-0.1.2.tar.gz", hash = "sha256:983d205d5ec5aa5228bd468962755013b9fee981da3ec9d95a7846a704d8eba3"},
-    {file = "textual_inputs-0.1.2-py3-none-any.whl", hash = "sha256:c827e9d0af7da69c86430a65d3db225e52b365ab8d0e4dabaffdbf8fdc382694"},
-]
+textual-inputs = []
 toml = [
     {file = "toml-0.10.2-py2.py3-none-any.whl", hash = "sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b"},
     {file = "toml-0.10.2.tar.gz", hash = "sha256:b3bda1d108d5dd99f4a20d24d9c348e91c4db7ab1b749200bded2f839ccbe68f"},
