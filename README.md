@@ -1,13 +1,13 @@
 <!-- markdownlint-disable MD026 -->
-# acr-browser
+# Azure Container Registry Browser
 
-![acr-browser](https://github.com/samdobson/acr-browser/actions/workflows/ci.yaml/badge.svg) [![PyPI version](https://badge.fury.io/py/acr-browser.svg)](https://badge.fury.io/py/acr-browser)
+[![PyPI version](https://badge.fury.io/py/acr-browser.svg)](https://badge.fury.io/py/acr-browser)
 
-`acr-browser` is a terminal-based user interface for managing container images and artifacts in Azure Container Registry.
+As a terminal-based user interface for managing container images and artifacts in [Azure Container Registry](https://azure.microsoft.com/en-us/services/container-registry/).
 
 ![home_view](media/interface.png)
 
-:rocket: This project owes a huge debt of gratitude to the fantastic [Azure Key Vault Browser](https://github.com/chelnak/azure-keyvault-browser), from which it is forked, and of course, to the underlying technologies that make both of these projects possible: [textual](https://github.com/willmcgugan/textual) and [rich](https://github.com/willmcgugan/rich)!
+:rocket: This project owes a huge debt of gratitude to the fantastic [Azure Key Vault Browser](https://github.com/chelnak/azure-keyvault-browser), on which it is based, and of course, to the underlying packages that make both of these projects possible: [textual](https://github.com/willmcgugan/textual) and [rich](https://github.com/willmcgugan/rich)!
 
 ## Installation
 
@@ -55,8 +55,6 @@ registry = ""
 ## Compatibility
 
 This project has been tested on macOS and Linux with Python 3.9.
-
-For Ubuntu 20.04, it may be necessary to install the `python3.9` package.
 
 ## Contributing
 
