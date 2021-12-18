@@ -1,18 +1,18 @@
 from .flash import FlashWidget, ShowFlashNotification
 from .header import HeaderWidget
 from .help import HelpWidget
+from .repos import RepositoriesWidget
 from .search import SearchWidget
-from .secret_properties import SecretPropertiesWidget
-from .secret_versions import SecretVersionsWidget
-from .secrets import SecretsWidget
+from .tag_properties import TagPropertiesWidget
+from .tags import TagsWidget
 
 __all__ = (
-    "SecretsWidget",
+    "RepositoriesWidget",
     "ShowFlashNotification",
     "SearchWidget",
     "FlashWidget",
     "HeaderWidget",
-    "SecretVersionsWidget",
-    "SecretPropertiesWidget",
+    "TagsWidget",
+    "TagPropertiesWidget",
     "HelpWidget",
 )

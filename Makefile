@@ -4,7 +4,7 @@ VENV ?= "$(shell poetry env list --full-path | cut -f1 -d " ")/bin/activate"
 
 # Releasing
 tag:
-	@git tag -a $(version) -m "Release $(version) -> Azure Key Vault Browser"
+	@git tag -a $(version) -m "Release $(version) -> ACR Browser"
 	@git push --follow-tags
 
 # Building
@@ -18,10 +18,10 @@ check:
 	@source $(VENV)
 	black --check .
 	mypy tools
-	isort --check src/azure_keyvault_browser
-	mypy src/azure_keyvault_browser
-	flake8 src/azure_keyvault_browser
-	darglint -m "{path}:{line} -> {msg_id}: {msg}" src/azure_keyvault_browser
+	isort --check src/acr_browser
+	mypy src/acr_browser
+	flake8 src/acr_browser
+	darglint -m "{path}:{line} -> {msg_id}: {msg}" src/acr_browser
 
 # Developing
 .PHONY: init
@@ -32,4 +32,4 @@ init:
 .PHONY: app-run
 app-run:
 	@poetry env use 3.9
-	@poetry run kv --config ./dev/.azure_keyvault_browser.toml --debug
+	@poetry run acr --config ./dev/.acr_browser.toml --debug

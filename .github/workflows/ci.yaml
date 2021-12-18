@@ -1,4 +1,4 @@
-name: azure-keyvault-browser
+name: acr-browser
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: azure-keyvault-browser
+  IMAGE_NAME: acr-browser
 
 jobs:
   build:
@@ -98,6 +98,6 @@ jobs:
       id: create_release
       uses: ncipollo/release-action@v1
       with:
-        name: azure-keyvault-browser
+        name: acr-browser
         body: ${{steps.build_changelog.outputs.changelog}}
         token: ${{ secrets.GITHUB_TOKEN }}

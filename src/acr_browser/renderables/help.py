@@ -28,10 +28,6 @@ class HelpRenderable:
             "last page": "l",
             "select": Keys.Enter,
         },
-        "secret properties": {
-            "toggle value": Keys.ControlS,
-            "copy value to clipboard": Keys.ControlK,
-        },
     }
 
     def __str__(self) -> str:

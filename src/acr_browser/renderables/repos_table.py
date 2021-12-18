@@ -1,18 +1,16 @@
 from __future__ import annotations
 
-from azure.keyvault.secrets import SecretProperties
+from azure.containerregistry import RepositoryProperties
 from rich.table import Table
 
 from .. import styles
 from .paginated_table import PaginatedTableRenderable
 
 
-class SecretVersionsTableRenderable(PaginatedTableRenderable):
-    """A secret versions table renderable."""
-
+class ReposTableRenderable(PaginatedTableRenderable):
     def __init__(
         self,
-        items: list[SecretProperties],
+        items: list[RepositoryProperties],
         title: str,
         page_size: int = -1,
         page: int = 1,
@@ -35,7 +33,9 @@ class SecretVersionsTableRenderable(PaginatedTableRenderable):
             len(items), page_size=page_size, page=page, row=row, row_size=1
         )
 
-    def renderables(self, start_index: int, end_index: int) -> list[SecretProperties]:
+    def renderables(
+        self, start_index: int, end_index: int
+    ) -> list[RepositoryProperties]:
         """Generate a list of renderables.
 
         Args:
@@ -48,7 +48,9 @@ class SecretVersionsTableRenderable(PaginatedTableRenderable):
 
         return self.items[start_index:end_index]
 
-    def render_rows(self, table: Table, renderables: list[SecretProperties]) -> None:
+    def render_rows(
+        self, table: Table, renderables: list[RepositoryProperties]
+    ) -> None:
         """Renders rows for the table.
 
         Args:
@@ -57,11 +59,9 @@ class SecretVersionsTableRenderable(PaginatedTableRenderable):
         """
 
         for item in renderables:
-            version = item.version
 
-            created_on = item.created_on.strftime("%Y-%m-%d %H:%M:%S")
-
-            table.add_row(version, created_on)
+            name = item
+            table.add_row(name)
 
     def render_columns(self, table: Table) -> None:
         """Renders columns for the table.
@@ -69,8 +69,6 @@ class SecretVersionsTableRenderable(PaginatedTableRenderable):
         Args:
             table (Table): The table to render columns for.
         """
-
         table.add_column(
-            "version", header_style=f"{styles.GREY} bold", no_wrap=True, ratio=40
+            "name", header_style=f"{styles.GREY} bold", no_wrap=True, ratio=100
         )
-        table.add_column("created on", header_style=f"{styles.GREY} bold", no_wrap=True)

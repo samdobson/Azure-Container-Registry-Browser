@@ -17,16 +17,16 @@ All of the good stuff. This is should be the main point for app configuration.
 
 # General
 CLI_HELP = """
-keyvault browser is a tool for browsing and searching for secrets in Azure Key Vault.
+acr-browser is a tool for managing container images and artifacts in Azure Container Registry.
 """
 
 
 @validator
-def keyvault_name(name: str) -> bool:
-    """Validate the name of the keyvault.
+def acr_name(name: str) -> bool:
+    """Validate the name of the acr.
 
     Args:
-        name (str): Name of the keyvault.
+        name (str): Name of the acr.
 
     Returns:
         bool: True or False depending on the name validity.
@@ -54,8 +54,8 @@ def set_config(path: str) -> MutableMapping[str, Any]:
     console.print(
         "It looks like this is the first time you are using this app.. lets add some configuration before we start :smiley:\n"  # noqa: E501
     )
-    config["keyvault"] = ask.question(
-        f"[b][{styles.GREY}]Key Vault Name[/][/]", validation=keyvault_name
+    config["acr"] = ask.question(
+        f"[b][{styles.GREY}]Container Registry Name[/][/]", validation=acr_name
     )
     with open(path, "w") as f:
         toml.dump(config, f)
@@ -81,7 +81,7 @@ def get_config(config: str | None = None) -> MutableMapping[str, Any]:
 
     else:
         home = os.getenv("HOME")
-        config_path = f"{home}/.azure-keyvault-browser.toml"
+        config_path = f"{home}/.acr-browser.toml"
 
         if not os.path.exists(config_path):
             _config = set_config(config_path)
