@@ -104,7 +104,7 @@ class RepositoriesWidget(Widget):
 
         self.renderable = ReposTableRenderable(
             items=self.repositories,
-            title="repositories",
+            title="🗃️  repositories",
             page_size=self.size.height - 5,
             page=self.page,
             row=self.row,

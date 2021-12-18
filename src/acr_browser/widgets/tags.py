@@ -103,7 +103,7 @@ class TagsWidget(Widget):
 
         self.renderable = TagsTableRenderable(
             items=self.tags or [],
-            title="tags",
+            title="🏷️  tags",
             page_size=self.size.height - 5,
             page=self.page,
             row=self.row,
