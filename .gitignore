@@ -1,13 +1,8 @@
 _archive
 __pycache__
 *.pyc
-textual.log
+acr-browser.log
 dist
 .mypy_cache
 .DS_Store
 .python-version
-
-textual.log
-
-*.lock.hcl
-*.lock.info
