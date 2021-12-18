@@ -53,7 +53,7 @@ class ACRBrowser(App):
     async def on_mount(self) -> None:
         """Overrides on_mount from App()"""
 
-        await self.view.dock(HeaderWidget(), size=5)
+        await self.view.dock(HeaderWidget(), size=7)
 
         self.search = SearchWidget()
         await self.view.dock(self.search, size=3)
