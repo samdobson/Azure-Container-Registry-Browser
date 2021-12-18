@@ -1,11 +1,9 @@
 from __future__ import annotations
 
-from pyperclip import copy
 from rich.console import RenderableType
 from rich.panel import Panel
 from rich.style import Style
 from textual import events
-from textual.keys import Keys
 from textual.reactive import Reactive, watch
 from textual.widget import Widget
 

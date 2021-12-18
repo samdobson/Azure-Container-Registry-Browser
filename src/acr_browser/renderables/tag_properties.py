@@ -3,7 +3,6 @@ from __future__ import annotations
 from azure.containerregistry import RepositoryProperties
 from rich.console import Console, ConsoleOptions, Group, RenderResult
 from rich.table import Table
-from rich.text import Text
 
 from .. import styles
 from ..util import format_datetime
@@ -25,7 +24,7 @@ class RepositoryPropertiesRenderable:
                 "created on": format_datetime(properties.created_on),
                 "updated on": format_datetime(properties.last_updated_on)
                 if properties.last_updated_on
-                else None
+                else None,
             }
             if properties
             else None
@@ -45,7 +44,7 @@ class RepositoryPropertiesRenderable:
 
         if self.properties:
 
-            #table.title = Text(self.title, no_wrap=True, style=styles.GREEN)
+            # table.title = Text(self.title, no_wrap=True, style=styles.GREEN)
             table.title_justify = "left"
             table.add_row()
             for property, value in self.properties.items():
