@@ -41,14 +41,16 @@ class ACRBrowser(App):
     async def on_load(self) -> None:
         """Overrides on_load from App()"""
 
+        self.log("Starting app")
         self.config = get_config(self.config_path)
         acr_name = self.config["registry"]
+        self.log(f"Registry name: {acr_name}")
         self.client = ContainerRegistry(acr_name=acr_name)
 
         await self.bind("h", "toggle_help", "help")
         await self.bind("ctrl+i", "cycle_widget", show=False)
         await self.bind(Keys.Escape, "refocus", show=False)
-        await self.bind("/", "select_search")
+        await self.bind("/", "select_search", "search")
         await self.bind("q", "quit", "quit")
 
     async def on_mount(self) -> None:
