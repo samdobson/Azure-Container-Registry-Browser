@@ -45,10 +45,11 @@ class ACRBrowser(App):
         acr_name = self.config["registry"]
         self.client = ContainerRegistry(acr_name=acr_name)
 
-        await self.bind("?", "toggle_help", "show help")
+        await self.bind("h", "toggle_help", "help")
         await self.bind("ctrl+i", "cycle_widget", show=False)
         await self.bind(Keys.Escape, "refocus", show=False)
-        await self.bind(Keys.ControlK, "toggle_search", show=False)
+        await self.bind("/", "select_search")
+        await self.bind("q", "quit", "quit")
 
     async def on_mount(self) -> None:
         """Overrides on_mount from App()"""
@@ -102,6 +103,11 @@ class ACRBrowser(App):
         """Toggle the help widget."""
 
         self.show_help = not self.show_help
+
+    async def action_select_search(self) -> None:
+        """Focus on the search widget."""
+
+        await self.app.set_focus(self.search)
 
     async def handle_show_flash_notification(
         self, message: ShowFlashNotification
