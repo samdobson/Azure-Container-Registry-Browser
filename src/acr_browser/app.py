@@ -83,7 +83,7 @@ class ACRBrowser(App):
             [self.search, self.repositories, self.tags, self.properties]
         )
 
-        await self.app.set_focus(self.search)
+        await self.app.set_focus(self.repositories)
 
     async def watch_show_help(self, show_help: bool) -> None:
         """Watch show_help and update widget visibility.
@@ -134,7 +134,7 @@ class ACRBrowser(App):
             await self.properties.clear()
             await self.search.clear()
         else:
-            await self.set_focus(self.search)
+            await self.set_focus(self.repositories)
             self.show_help = False
 
 
