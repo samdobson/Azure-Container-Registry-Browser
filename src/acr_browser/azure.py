@@ -1,4 +1,4 @@
-from azure.containerregistry import RepositoryProperties
+from azure.containerregistry import ArtifactTagProperties
 from azure.containerregistry.aio import ContainerRegistryClient
 from azure.identity.aio import AzureCliCredential
 
@@ -19,7 +19,7 @@ class ContainerRegistry:
             print(p)
         return repos
 
-    async def get_tags(self, name: str) -> list[RepositoryProperties]:
+    async def get_tags(self, name: str) -> list[ArtifactTagProperties]:
         properties = []
         async for p in self.client.list_tag_properties(name):
             properties.append(p)

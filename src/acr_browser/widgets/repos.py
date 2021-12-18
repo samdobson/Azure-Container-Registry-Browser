@@ -9,7 +9,7 @@ from textual.reactive import Reactive, watch
 from textual.widget import Widget
 
 from .. import styles
-from ..azure import ContainerRegistry, RepositoryProperties
+from ..azure import ContainerRegistry
 from ..renderables import ReposTableRenderable
 
 
@@ -26,7 +26,7 @@ class RepositoriesWidget(Widget):
 
         name = self.__class__.__name__
         super().__init__(name=name)
-        self.repositories: list[RepositoryProperties] = []
+        self.repositories: list[str] = []
         self.renderable: ReposTableRenderable | None = None
         self.client: ContainerRegistry = self.app.client
 

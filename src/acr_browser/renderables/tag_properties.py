@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from azure.containerregistry import RepositoryProperties
+from azure.containerregistry import ArtifactTagProperties
 from rich.console import Console, ConsoleOptions, Group, RenderResult
 from rich.table import Table
 
@@ -16,7 +16,7 @@ RIGHT = "\u2192"
 class RepositoryPropertiesRenderable:
     """A repository properties renderable."""
 
-    def __init__(self, properties: RepositoryProperties | None, value: str) -> None:
+    def __init__(self, properties: ArtifactTagProperties | None, value: str) -> None:
         self.title = f"{properties.name} @ {properties.digest}" if properties else ""
         self.properties = (
             {

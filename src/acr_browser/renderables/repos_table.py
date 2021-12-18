@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from azure.containerregistry import RepositoryProperties
 from rich.table import Table
 
 from .. import styles
@@ -10,7 +9,7 @@ from .paginated_table import PaginatedTableRenderable
 class ReposTableRenderable(PaginatedTableRenderable):
     def __init__(
         self,
-        items: list[RepositoryProperties],
+        items: list[str],
         title: str,
         page_size: int = -1,
         page: int = 1,
@@ -33,9 +32,7 @@ class ReposTableRenderable(PaginatedTableRenderable):
             len(items), page_size=page_size, page=page, row=row, row_size=1
         )
 
-    def renderables(
-        self, start_index: int, end_index: int
-    ) -> list[RepositoryProperties]:
+    def renderables(self, start_index: int, end_index: int) -> list[str]:
         """Generate a list of renderables.
 
         Args:
@@ -48,9 +45,7 @@ class ReposTableRenderable(PaginatedTableRenderable):
 
         return self.items[start_index:end_index]
 
-    def render_rows(
-        self, table: Table, renderables: list[RepositoryProperties]
-    ) -> None:
+    def render_rows(self, table: Table, renderables: list[str]) -> None:
         """Renders rows for the table.
 
         Args:

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from azure.containerregistry import RepositoryProperties
+from azure.containerregistry import ArtifactTagProperties
 from rich.table import Table
 
 from .. import styles
@@ -12,7 +12,7 @@ class TagsTableRenderable(PaginatedTableRenderable):
 
     def __init__(
         self,
-        items: list[RepositoryProperties],
+        items: list[ArtifactTagProperties],
         title: str,
         page_size: int = -1,
         page: int = 1,
@@ -37,7 +37,7 @@ class TagsTableRenderable(PaginatedTableRenderable):
 
     def renderables(
         self, start_index: int, end_index: int
-    ) -> list[RepositoryProperties]:
+    ) -> list[ArtifactTagProperties]:
         """Generate a list of renderables.
 
         Args:
@@ -51,7 +51,7 @@ class TagsTableRenderable(PaginatedTableRenderable):
         return self.items[start_index:end_index]
 
     def render_rows(
-        self, table: Table, renderables: list[RepositoryProperties]
+        self, table: Table, renderables: list[ArtifactTagProperties]
     ) -> None:
         """Renders rows for the table.
 

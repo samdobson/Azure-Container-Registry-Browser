@@ -9,7 +9,7 @@ from textual.reactive import Reactive, watch
 from textual.widget import Widget
 
 from .. import styles
-from ..azure import ContainerRegistry, RepositoryProperties
+from ..azure import ArtifactTagProperties, ContainerRegistry
 from ..renderables import TagsTableRenderable
 
 
@@ -26,8 +26,8 @@ class TagsWidget(Widget):
 
         name = self.__class__.__name__
         super().__init__(name=name)
-        self.tags: list[RepositoryProperties] = []
-        self.tag_map: dict[str, RepositoryProperties] = {}
+        self.tags: list[ArtifactTagProperties] = []
+        self.tag_map: dict[str, ArtifactTagProperties] = {}
         self.renderable: TagsTableRenderable | None = None
         self.reveal: bool
         self.client: ContainerRegistry = self.app.client

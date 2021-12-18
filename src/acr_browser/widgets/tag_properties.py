@@ -8,7 +8,7 @@ from textual.reactive import Reactive, watch
 from textual.widget import Widget
 
 from .. import styles
-from ..azure import ContainerRegistry, RepositoryProperties
+from ..azure import ArtifactTagProperties, ContainerRegistry
 from ..renderables import RepositoryPropertiesRenderable
 
 
@@ -22,7 +22,7 @@ class TagPropertiesWidget(Widget):
 
         name = self.__class__.__name__
         super().__init__(name=name)
-        self.selected_tag: RepositoryProperties | None = None
+        self.selected_tag: ArtifactTagProperties | None = None
         self.renderable: RepositoryPropertiesRenderable | None = None
         self.value: str = ""
         self.client: ContainerRegistry = self.app.client
@@ -49,11 +49,11 @@ class TagPropertiesWidget(Widget):
         self.renderable = None
         self.refresh(layout=True)
 
-    async def update(self, selected_tag: RepositoryProperties) -> None:
+    async def update(self, selected_tag: ArtifactTagProperties) -> None:
         """Updates the widget with new tag properties.
 
         Args:
-            selected_tag (RepositoryProperties): A tag properties object.
+            selected_tag (ArtifactTagProperties): A tag properties object.
         """
 
         if selected_tag:
