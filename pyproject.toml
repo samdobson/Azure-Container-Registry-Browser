@@ -22,13 +22,14 @@ python = "^3.7"
 textual = "^0.1.12"
 toml = "^0.10.2"
 rich = "^10.11.0"
-textual-inputs = {git = "https://github.com/samdobson/textual-inputs.git", rev = "main"}
+textual-inputs = "^0.2.0"
 click = "^8.0.3"
 validators = "^0.18.2"
 azure-identity = "^1.7.1"
 azure-containerregistry = "^1.0.0b7"
 pyperclip = "^1.8.2"
 aiohttp = "^3.8.1"
+importlib-metadata = "^4.10.0"
 
 [tool.poetry.dev-dependencies]
 black = "^21.9b0"
@@ -38,7 +39,7 @@ types-toml = "^0.10.0"
 types-setuptools = "^57.4.2"
 isort = "^5.10.1"
 darglint = "^1.8.1"
-flake8 = "^4.0.1"
+flake8 = "^3.9.2"
 
 [tool.poetry.scripts]
 acr = "acr_browser.app:run"
