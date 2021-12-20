@@ -13,7 +13,7 @@ from .ask import Ask
 
 # General
 CLI_HELP = """
-acr-browser is a tool for managing container images and artifacts in Azure Container Registry.
+azurecr-browser is a tool for managing container images and artifacts in Azure Container Registry.
 """
 
 
@@ -77,7 +77,7 @@ def get_config(config: str | None = None) -> MutableMapping[str, Any]:
 
     else:
         home = os.getenv("HOME")
-        config_path = f"{home}/.acr-browser.toml"
+        config_path = f"{home}/.azurecr-browser.toml"
 
         if not os.path.exists(config_path):
             _config = set_config(config_path)

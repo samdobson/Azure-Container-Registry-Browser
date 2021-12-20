@@ -199,7 +199,7 @@ class ACRBrowser(App):
     default=None,
     envvar="ACR_BROWSER_CONFIG",
     type=Path(file_okay=True, dir_okay=False, exists=False, resolve_path=True),
-    help="Explicitly override the config that will be used by acr-browser.",
+    help="Explicitly override the config that will be used by azurecr-browser.",
 )
 @click.option(
     "--debug",
@@ -219,6 +219,6 @@ def run(config: str | None, debug: bool) -> None:
     app = ACRBrowser
     app.config_path = config
     if debug:
-        app.run(log="acr-browser.log", title=title)
+        app.run(log="azurecr-browser.log", title=title)
     else:
         app.run()
