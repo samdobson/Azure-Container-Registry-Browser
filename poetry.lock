@@ -826,7 +826,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "092137087ee50bf6607177ab0e396e07f319d3e2a720b7fb52f85c251a9c0ed1"
+content-hash = "fc37eba8f68adc126be8a2908f42813fec7796f31c047f7eecc72a1bbea6d38b"
 
 [metadata.files]
 aiodocker = [
