@@ -6,8 +6,8 @@ if (sys.version_info[0], sys.version_info[1]) < (3, 7):
 try:
     import importlib.metadata
 
-    __version__ = importlib.metadata.version("acr_browser")
+    __version__ = importlib.metadata.version("azurecr_browser")
 except ModuleNotFoundError:
     import importlib_metadata
 
-    __version__ = importlib_metadata.version("acr_browser")
+    __version__ = importlib_metadata.version("azurecr_browser")

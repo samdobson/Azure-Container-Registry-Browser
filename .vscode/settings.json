@@ -4,7 +4,7 @@
     "python.linting.enabled": true,
     "python.linting.mypyEnabled": true,
     "python.analysis.extraPaths": [
-        "./src/azure_acr_browser"
+        "./src/azure_azurecr_browser"
     ],
     "[python]": {
         "editor.codeActionsOnSave": {

@@ -5,7 +5,7 @@ COPY dist/ /tmp
 
 RUN pip install --no-cache-dir -U pip && \
   pip install --no-cache-dir azure-cli && \
-  pip install --no-cache-dir /tmp/acr_browser*.whl && \
-  rm /tmp/acr_browser*.whl
+  pip install --no-cache-dir /tmp/azurecr_browser*.whl && \
+  rm /tmp/azurecr_browser*.whl
 
 ENTRYPOINT ["acr"]

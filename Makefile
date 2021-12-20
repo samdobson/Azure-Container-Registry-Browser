@@ -18,10 +18,10 @@ check:
 	@source $(VENV)
 	black --check .
 	mypy tools
-	isort --check src/acr_browser
-	mypy src/acr_browser --ignore-missing-imports
-	flake8 src/acr_browser
-	darglint -m "{path}:{line} -> {msg_id}: {msg}" src/acr_browser
+	isort --check src/azurecr_browser
+	mypy src/azurecr_browser --ignore-missing-imports
+	flake8 src/azurecr_browser
+	darglint -m "{path}:{line} -> {msg_id}: {msg}" src/azurecr_browser
 
 # Developing
 .PHONY: init
@@ -32,4 +32,4 @@ init:
 .PHONY: app-run
 app-run:
 	@poetry env use 3.9
-	@poetry run acr --config ./dev/.acr_browser.toml --debug
+	@poetry run acr --config ./dev/.azurecr_browser.toml --debug
