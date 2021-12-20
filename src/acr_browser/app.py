@@ -26,6 +26,7 @@ from .widgets import (
     TagPropertiesWidget,
     TagsWidget,
 )
+from .widgets.flash import FlashMessageType
 
 
 class ACRBrowser(App):
@@ -138,6 +139,14 @@ class ACRBrowser(App):
             self.log("No tag selected")
             return
         image = f"{self.selected_repo}:{self.selected_tag.name}"
+
+        await self.handle_show_flash_notification(
+            ShowFlashNotification(
+                self,
+                type=FlashMessageType.INFO,
+                value="Image pull started...",
+            )
+        )
 
         self.log("Logging in to ACR")
         await self.run_cmd(f"az acr login -n {self.acr_name}")
