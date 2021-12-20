@@ -53,7 +53,7 @@ class ACRBrowser(App):
 
         try:
             self.docker = aiodocker.Docker()
-        except aiodocker.exceptions.DockerError:
+        except (aiodocker.exceptions.DockerError, ValueError):
             pass
 
         await self.bind("h", "toggle_help", "help")
