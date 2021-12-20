@@ -17,7 +17,7 @@ build: check
 check:
 	@source $(VENV)
 	black --check .
-	mypy tools
+	mypy tools --ignore-missing-imports
 	isort --check src/acr_browser
 	mypy src/acr_browser
 	flake8 src/acr_browser
