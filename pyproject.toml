@@ -2,26 +2,15 @@
 name = "azurecr-browser"
 version = "1.0.0"
 description = "A terminal application for managing images and artifacts in Azure Container Registry."
-authors = [
-    "Sam Dobson <1309834+samdobson@users.noreply.github.com>"
-]
+authors = [ "Sam Dobson <1309834+samdobson@users.noreply.github.com>",]
 license = "MIT"
 readme = "README.md"
 python = "^3.7"
 homepage = "https://github.com/samdobson/Azure-Container-Registry-Browser"
 repository = "https://github.com/samdobson/Azure-Container-Registry-Browser"
 documentation = "https://github.com/samdobson/Azure-Container-Registry-Browser"
-keywords = ["azure", "acr", "container registry", "terminal", "tui", "textual"]
-classifiers = [
-    "Development Status :: 3 - Alpha",
-    "Environment :: Console",
-    "Topic :: Software Development",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-]
+keywords = [ "azure", "acr", "container registry", "terminal", "tui", "textual",]
+classifiers = [ "Development Status :: 3 - Alpha", "Environment :: Console", "Topic :: Software Development", "Programming Language :: Python :: 3", "Programming Language :: Python :: 3.7", "Programming Language :: Python :: 3.8", "Programming Language :: Python :: 3.9", "Programming Language :: Python :: 3.10",]
 
 [build-system]
 requires = [ "poetry-core>=1.0.0",]
@@ -29,7 +18,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "azurecr-browser"
-version = "1.0.0"
+version = "1.0.1"
 description = "A terminal user interface for managing artifacts in Azure Container Registry"
 authors = [ "Sam Dobson <1309834+samdobson@users.noreply.github.com>",]
 license = "MIT"
