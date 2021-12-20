@@ -15,7 +15,7 @@ from .. import styles
 class HeaderWidget(Widget):
     """A custom header widget."""
 
-    title: Reactive[str | Text] = Reactive("Azure Key Vault 🔑")
+    title: Reactive[str | Text] = Reactive("📦 Azure Container Registry")
 
     def __init__(self) -> None:
         """A custom header widget."""
@@ -29,7 +29,7 @@ class HeaderWidget(Widget):
         """Create text containing all the keys.
 
         Returns:
-            Text: A Text renderable containing all the keys.
+            Text: A Text renderable to show the shortcut keys.
         """
 
         text = Text(

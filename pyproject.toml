@@ -1,8 +1,37 @@
+[project]
+name = "azurecr-browser"
+version = "1.0.0"
+description = "A terminal application for managing images and artifacts in Azure Container Registry."
+authors = [
+    "Sam Dobson <1309834+samdobson@users.noreply.github.com>"
+]
+license = "MIT"
+readme = "README.md"
+python = "^3.7"
+homepage = "https://github.com/samdobson/Azure-Container-Registry-Browser"
+repository = "https://github.com/samdobson/Azure-Container-Registry-Browser"
+documentation = "https://github.com/samdobson/Azure-Container-Registry-Browser"
+keywords = ["azure", "acr", "container registry", "terminal", "tui", "textual"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Topic :: Software Development",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+]
+
+[build-system]
+requires = [ "poetry-core>=1.0.0",]
+build-backend = "poetry.core.masonry.api"
+
 [tool.poetry]
-name = "azure-keyvault-browser"
-version = "0.0.1"
-description = "A tool for browsing and searching for secrets in Azure Key Vault"
-authors = ["Craig Gumbley <craiggumbley@gmail.com>"]
+name = "azurecr-browser"
+version = "1.0.0"
+description = "A terminal user interface for managing artifacts in Azure Container Registry"
+authors = [ "Sam Dobson <1309834+samdobson@users.noreply.github.com>",]
 license = "MIT"
 
 [tool.mypy]
@@ -14,17 +43,18 @@ ignore_missing_imports = true
 profile = "black"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.7"
 textual = "^0.1.12"
 toml = "^0.10.2"
 rich = "^10.11.0"
-textual-inputs = "^0.1.2"
+textual-inputs = "^0.2.0"
 click = "^8.0.3"
 validators = "^0.18.2"
 azure-identity = "^1.7.1"
-azure-keyvault-secrets = "^4.3.0"
+azure-containerregistry = "^1.0.0b7"
 pyperclip = "^1.8.2"
 aiohttp = "^3.8.1"
+importlib-metadata = "^4.10.0"
 
 [tool.poetry.dev-dependencies]
 black = "^21.9b0"
@@ -34,15 +64,11 @@ types-toml = "^0.10.0"
 types-setuptools = "^57.4.2"
 isort = "^5.10.1"
 darglint = "^1.8.1"
-flake8 = "^4.0.1"
+flake8 = "^3.9.2"
 
 [tool.poetry.scripts]
-kv = "azure_keyvault_browser.app:run"
+acr = "azurecr_browser.app:run"
 
 [tool.poetry.dependencies.fast-autocomplete]
 extras = [ "pylev",]
 version = "^0.9.0"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"

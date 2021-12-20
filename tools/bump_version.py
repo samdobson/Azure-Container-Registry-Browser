@@ -1,9 +1,7 @@
 import os
 
-import toml
-from pkg_resources import parse_version
-
-# Exception: The ref refs/pull/55/merge is not valid.
+import toml  # type: ignore
+from pkg_resources import parse_version  # type: ignore
 
 
 def bump_version_from_ref() -> None:

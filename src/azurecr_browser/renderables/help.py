@@ -16,8 +16,9 @@ class HelpRenderable:
     shortcuts = {
         "global": {
             "back": Keys.Escape,
-            "help": "?",
-            "quit": Keys.ControlC,
+            "search": "/",
+            "help": "h",
+            "quit": "q",
         },
         "navigation": {
             "next row": f"{DOWN}",
@@ -27,10 +28,6 @@ class HelpRenderable:
             "first page": "f",
             "last page": "l",
             "select": Keys.Enter,
-        },
-        "secret properties": {
-            "toggle value": Keys.ControlS,
-            "copy value to clipboard": Keys.ControlK,
         },
     }
 

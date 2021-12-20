@@ -3,7 +3,6 @@ from __future__ import annotations
 import string
 from typing import Any
 
-from azure.keyvault.secrets import SecretProperties
 from fast_autocomplete import AutoComplete
 from rich.console import RenderableType
 from rich.padding import Padding
@@ -38,7 +37,7 @@ class SearchWidget(TextInput):
     async def on_mount(self) -> None:
         """Actions that are executed when the widget is mounted."""
 
-        async def map(nodes: list[SecretProperties]):
+        async def map(nodes: list[str]):
             searchable_words, synonyms = self.map_nodes(nodes=nodes)
             self.autocompleter = AutoComplete(words=searchable_words, synonyms=synonyms)
             self.log("Searchable nodes have been mapped")
@@ -83,7 +82,7 @@ class SearchWidget(TextInput):
                     )
                 )
             else:
-                await self.app.set_focus(self.app.secrets)
+                await self.app.set_focus(self.app.repositories)
 
         elif event.key == "ctrl+h":  # Backspace
             if len(self.value) == 1:
@@ -114,7 +113,7 @@ class SearchWidget(TextInput):
             self.app.search_result = []
 
     def map_nodes(
-        self, nodes: list[SecretProperties]
+        self, nodes: list[str]
     ) -> tuple[dict[str, Any], dict[str, list[str]]]:
         """Build a map of nodes and synonyms.
 
@@ -128,7 +127,7 @@ class SearchWidget(TextInput):
         searchable_words: dict[str, Any] = {}
         synonyms: dict[str, list[str]] = {}
         for node in nodes:
-            name = node.name.lower()
+            name = node.lower()
             searchable_words[name] = {}
 
             # Secret names must can contain Alphanumerics and hyphens (dash).

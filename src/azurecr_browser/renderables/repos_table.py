@@ -1,17 +1,15 @@
 from __future__ import annotations
 
-from azure.keyvault.secrets import SecretProperties
 from rich.table import Table
 
 from .. import styles
-from ..util import format_datetime
 from .paginated_table import PaginatedTableRenderable
 
 
-class SecretsTableRenderable(PaginatedTableRenderable):
+class ReposTableRenderable(PaginatedTableRenderable):
     def __init__(
         self,
-        items: list[SecretProperties],
+        items: list[str],
         title: str,
         page_size: int = -1,
         page: int = 1,
@@ -34,7 +32,7 @@ class SecretsTableRenderable(PaginatedTableRenderable):
             len(items), page_size=page_size, page=page, row=row, row_size=1
         )
 
-    def renderables(self, start_index: int, end_index: int) -> list[SecretProperties]:
+    def renderables(self, start_index: int, end_index: int) -> list[str]:
         """Generate a list of renderables.
 
         Args:
@@ -47,7 +45,7 @@ class SecretsTableRenderable(PaginatedTableRenderable):
 
         return self.items[start_index:end_index]
 
-    def render_rows(self, table: Table, renderables: list[SecretProperties]) -> None:
+    def render_rows(self, table: Table, renderables: list[str]) -> None:
         """Renders rows for the table.
 
         Args:
@@ -57,10 +55,8 @@ class SecretsTableRenderable(PaginatedTableRenderable):
 
         for item in renderables:
 
-            name = item.name
-            updated_on = format_datetime(item.updated_on)
-
-            table.add_row(name, updated_on)
+            name = item
+            table.add_row(name)
 
     def render_columns(self, table: Table) -> None:
         """Renders columns for the table.
@@ -69,8 +65,5 @@ class SecretsTableRenderable(PaginatedTableRenderable):
             table (Table): The table to render columns for.
         """
         table.add_column(
-            "name", header_style=f"{styles.GREY} bold", no_wrap=True, ratio=40
-        )
-        table.add_column(
-            "last updated", header_style=f"{styles.GREY} bold", no_wrap=True
+            "name", header_style=f"{styles.GREY} bold", no_wrap=True, ratio=100
         )

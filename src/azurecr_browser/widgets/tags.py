@@ -9,12 +9,12 @@ from textual.reactive import Reactive, watch
 from textual.widget import Widget
 
 from .. import styles
-from ..azure import KeyVault, SecretProperties
-from ..renderables import SecretsTableRenderable
+from ..azure import ArtifactTagProperties, ContainerRegistry
+from ..renderables import TagsTableRenderable
 
 
-class SecretsWidget(Widget):
-    """A secrets details widget. Used to display secrets."""
+class TagsWidget(Widget):
+    """A tags widget. Used to display tags in a repository."""
 
     has_focus: Reactive[bool] = Reactive(False)
 
@@ -22,13 +22,15 @@ class SecretsWidget(Widget):
     row: int = 0
 
     def __init__(self) -> None:
-        """A job details widget. Used to display builds within a job."""
+        """A tags widget. Used to display tags in a repository."""
 
         name = self.__class__.__name__
         super().__init__(name=name)
-        self.secrets: list[SecretProperties] = []
-        self.renderable: SecretsTableRenderable | None = None
-        self.client: KeyVault = self.app.client
+        self.tags: list[ArtifactTagProperties] = []
+        self.tag_map: dict[str, ArtifactTagProperties] = {}
+        self.renderable: TagsTableRenderable | None = None
+        self.reveal: bool
+        self.client: ContainerRegistry = self.app.client
 
     def on_focus(self) -> None:
         """Sets has_focus to true when the item is clicked."""
@@ -43,27 +45,27 @@ class SecretsWidget(Widget):
     async def on_mount(self) -> None:
         """Actions that are executed when the widget is mounted."""
 
-        self.secrets = await self.client.get_secrets()
-        self.app.searchable_nodes = self.secrets
+        watch(self.app, "selected_repo", self.update)
 
-        watch(self.app, "search_result", self.update)
+    async def clear(self) -> None:
+        """Clears the widget."""
 
-    async def update(self, search_result: list[str]) -> None:
-        """Update the widget with the search result.
+        self.tags = []
+        self.renderable = None
+        self.refresh(layout=True)
+
+    async def update(self, repository_name: str) -> None:
+        """Updates the widget with new info.
 
         Args:
-            search_result (list[str]): A list of secret names that match the search.
+            repository_name (str): The repository name.
         """
 
-        if len(search_result) > 0:
-            if search_result[0] == "none":
-                self.secrets = self.app.searchable_nodes
-            else:
-                self.secrets = [
-                    x for x in self.secrets if x.name.lower() in search_result
-                ]
-        else:
-            self.secrets = self.app.searchable_nodes
+        if repository_name:
+            self.tags = await self.client.get_tags(repository_name)
+            self.tag_map = {t.name: t for t in self.tags}
+            await self.app.set_focus(self)
+
         self.refresh(layout=True)
 
     def on_key(self, event: events.Key) -> None:
@@ -73,18 +75,15 @@ class SecretsWidget(Widget):
             event (events.Key): The event containing the pressed key.
         """
 
-        if self.renderable is None:
+        if self.renderable is None or len(self.tags) == 0:
             return
 
         key = event.key
-
         if key == Keys.Enter:
-
             row = self.renderable.get_cell_value(0, self.row)
-            self.app.selected_secret = row
-            self.app.selected_version = ""
+            self.app.selected_tag = self.tag_map[str(row)]
 
-        if key == Keys.Left:
+        elif key == Keys.Left:
             self.renderable.previous_page()
         elif key == Keys.Right:
             self.renderable.next_page()
@@ -100,11 +99,11 @@ class SecretsWidget(Widget):
         self.refresh(layout=True)
 
     def render_table(self) -> None:
-        """Renders the build history table."""
+        """Render the table."""
 
-        self.renderable = SecretsTableRenderable(
-            items=self.secrets,
-            title="secrets",
+        self.renderable = TagsTableRenderable(
+            items=self.tags or [],
+            title="🏷️  tags",
             page_size=self.size.height - 5,
             page=self.page,
             row=self.row,
@@ -122,7 +121,7 @@ class SecretsWidget(Widget):
             self.row = self.renderable.row
 
         self.render_table()
-        assert isinstance(self.renderable, SecretsTableRenderable)
+        assert isinstance(self.renderable, TagsTableRenderable)
         return Panel(
             renderable=self.renderable,
             title=f"[{styles.GREY}]( {self.renderable.title} )[/]",
