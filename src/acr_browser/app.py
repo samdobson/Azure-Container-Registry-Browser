@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import asyncio
 from itertools import cycle
 from typing import Any, MutableMapping
 
+import aiodocker
 import click
 from azure.containerregistry import RepositoryProperties
 from click import Path
@@ -24,6 +26,7 @@ from .widgets import (
     TagPropertiesWidget,
     TagsWidget,
 )
+from .widgets.flash import FlashMessageType
 
 
 class ACRBrowser(App):
@@ -31,6 +34,7 @@ class ACRBrowser(App):
     config_path: str | None = None
     config: MutableMapping[str, Any]
     client: ContainerRegistry
+    docker: aiodocker.Docker | None = None
     show_help: Reactive[bool] = Reactive(False)
     selected_tag: Reactive[RepositoryProperties] = Reactive(None)
     selected_repo: Reactive[str] = Reactive("")
@@ -41,19 +45,29 @@ class ACRBrowser(App):
     async def on_load(self) -> None:
         """Overrides on_load from App()"""
 
+        self.log("Starting app")
         self.config = get_config(self.config_path)
-        acr_name = self.config["registry"]
-        self.client = ContainerRegistry(acr_name=acr_name)
+        self.acr_name = self.config["registry"]
+        self.log(f"Registry name: {self.acr_name}")
+        self.client = ContainerRegistry(self.acr_name)
 
-        await self.bind("?", "toggle_help", "show help")
+        try:
+            self.docker = aiodocker.Docker()
+        except aiodocker.exceptions.DockerError:
+            pass
+
+        await self.bind("h", "toggle_help", "help")
         await self.bind("ctrl+i", "cycle_widget", show=False)
         await self.bind(Keys.Escape, "refocus", show=False)
-        await self.bind(Keys.ControlK, "toggle_search", show=False)
+        await self.bind("/", "select_search", "search")
+        await self.bind("q", "quit", "quit")
+        if self.docker:
+            await self.bind("p", "pull_image", "pull")
 
     async def on_mount(self) -> None:
         """Overrides on_mount from App()"""
 
-        await self.view.dock(HeaderWidget(), size=5)
+        await self.view.dock(HeaderWidget(), size=7)
 
         self.search = SearchWidget()
         await self.view.dock(self.search, size=3)
@@ -83,7 +97,7 @@ class ACRBrowser(App):
             [self.search, self.repositories, self.tags, self.properties]
         )
 
-        await self.app.set_focus(self.search)
+        await self.app.set_focus(self.repositories)
 
     async def watch_show_help(self, show_help: bool) -> None:
         """Watch show_help and update widget visibility.
@@ -102,6 +116,47 @@ class ACRBrowser(App):
         """Toggle the help widget."""
 
         self.show_help = not self.show_help
+
+    async def run_cmd(self, cmd) -> None:
+        proc = await asyncio.create_subprocess_shell(
+            cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+        )
+
+        stdout, stderr = await proc.communicate()
+
+        self.log(f"[{cmd!r} exited with {proc.returncode}]")
+        if stdout:
+            self.log(f"[stdout]\n{stdout.decode()}")
+        if stderr:
+            self.log(f"[stderr]\n{stderr.decode()}")
+
+    async def action_pull_image(self) -> None:
+        """Pull an image with docker."""
+        if not self.docker:
+            self.log("Docker is not available")
+            return
+        if not self.selected_repo and not self.selected_tag:
+            self.log("No tag selected")
+            return
+        image = f"{self.selected_repo}:{self.selected_tag.name}"
+
+        await self.handle_show_flash_notification(
+            ShowFlashNotification(
+                self,
+                type=FlashMessageType.INFO,
+                value="Image pull started...",
+            )
+        )
+
+        self.log("Logging in to ACR")
+        await self.run_cmd(f"az acr login -n {self.acr_name}")
+        self.log(f"Pulling image: {image}")
+        await self.run_cmd(f"docker pull {self.acr_name}.azurecr.io/{image}")
+
+    async def action_select_search(self) -> None:
+        """Focus on the search widget."""
+
+        await self.app.set_focus(self.search)
 
     async def handle_show_flash_notification(
         self, message: ShowFlashNotification
@@ -134,7 +189,7 @@ class ACRBrowser(App):
             await self.properties.clear()
             await self.search.clear()
         else:
-            await self.set_focus(self.search)
+            await self.set_focus(self.repositories)
             self.show_help = False
 
 

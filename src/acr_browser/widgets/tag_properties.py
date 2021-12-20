@@ -93,7 +93,7 @@ class TagPropertiesWidget(Widget):
         assert isinstance(self.renderable, RepositoryPropertiesRenderable)
         return Panel(
             renderable=self.renderable,
-            title=f"[{styles.GREY}]( properties )[/]",
+            title=f"[{styles.GREY}]( ℹ️ properties )[/]",
             border_style=Style(
                 color=styles.LIGHT_PURPLE if self.has_focus else styles.PURPLE
             ),

@@ -11,10 +11,6 @@ from validators.utils import validator
 from . import styles
 from .ask import Ask
 
-"""
-All of the good stuff. This is should be the main point for app configuration.
-"""
-
 # General
 CLI_HELP = """
 acr-browser is a tool for managing container images and artifacts in Azure Container Registry.
@@ -23,10 +19,10 @@ acr-browser is a tool for managing container images and artifacts in Azure Conta
 
 @validator
 def acr_name(name: str) -> bool:
-    """Validate the name of the acr.
+    """Validate the name of the container registry.
 
     Args:
-        name (str): Name of the acr.
+        name (str): Name of the container registry.
 
     Returns:
         bool: True or False depending on the name validity.

@@ -18,7 +18,6 @@ class ContainerRegistry:
         repos = []
         async for p in self.client.list_repository_names():
             repos.append(p)
-            print(p)
         return repos
 
     async def get_tags(self, name: str) -> list[ArtifactTagProperties]:

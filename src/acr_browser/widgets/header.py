@@ -29,7 +29,7 @@ class HeaderWidget(Widget):
         """Create text containing all the keys.
 
         Returns:
-            Text: A Text renderable containing all the keys.
+            Text: A Text renderable to show the shortcut keys.
         """
 
         text = Text(
