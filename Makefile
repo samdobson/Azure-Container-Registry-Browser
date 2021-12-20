@@ -17,9 +17,9 @@ build: check
 check:
 	@source $(VENV)
 	black --check .
-	mypy tools --ignore-missing-imports
+	mypy tools
 	isort --check src/acr_browser
-	mypy src/acr_browser
+	mypy src/acr_browser --ignore-missing-imports
 	flake8 src/acr_browser
 	darglint -m "{path}:{line} -> {msg_id}: {msg}" src/acr_browser
 
