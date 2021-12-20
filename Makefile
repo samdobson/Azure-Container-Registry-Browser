@@ -4,7 +4,7 @@ VENV ?= "$(shell poetry env list --full-path | cut -f1 -d " ")/bin/activate"
 
 # Releasing
 tag:
-	@git tag -a $(version) -m "Release $(version) -> ACR Browser"
+	@git tag -a $(version) -m "Release $(version) -> Azure CR Browser"
 	@git push --follow-tags
 
 # Building

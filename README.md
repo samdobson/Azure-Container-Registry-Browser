@@ -11,7 +11,7 @@ A terminal-based user interface for managing container images and artifacts in A
 ## Installation
 
 ```bash
-pip install acr-browser
+pip install azurecr-browser
 ```
 
 Once the app is installed you can run the application from your terminal with the command:
@@ -23,12 +23,12 @@ acr
 Alternatively, you can skip the above, and instead run with Docker:
 
 ```bash
-docker run --rm -it --volume $HOME:/app --volume $HOME/.azure:/root/.azure ghcr.io/samdobson/acr-browser:latest
+docker run --rm -it --volume $HOME:/app --volume $HOME/.azure:/root/.azure ghcr.io/samdobson/azurecr-browser:latest
 ```
 
 ### Authentication
 
-`acr-browser` uses the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/) for authentication. Before using the app, make sure that you have logged in and set your subscription.
+`azure-cr-browser` uses the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/) for authentication. Before using the app, make sure that you have logged in and set your subscription.
 
 ```bash
 az login
@@ -55,4 +55,4 @@ registry = ""
 
 ## Contributing
 
-If you would like to contribute to `acr-browser` head over to the [contributing guide](CONTRIBUTING.md) to find out more.
+If you would like to contribute to `azurecr-browser` head over to the [contributing guide](CONTRIBUTING.md) to find out more.

@@ -1,4 +1,4 @@
-name: acr-browser
+name: azurecr-browser
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: acr-browser
+  IMAGE_NAME: azurecr-browser
 
 jobs:
   build:
@@ -98,6 +98,6 @@ jobs:
       id: create_release
       uses: ncipollo/release-action@v1
       with:
-        name: acr-browser
+        name: azurecr-browser
         body: ${{steps.build_changelog.outputs.changelog}}
         token: ${{ secrets.GITHUB_TOKEN }}

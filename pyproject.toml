@@ -3,7 +3,7 @@ requires = [ "poetry-core>=1.0.0",]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
-name = "acr-browser"
+name = "azurecr-browser"
 version = "1.0.3"
 description = "A terminal user interface for managing artifacts in Azure Container Registry"
 authors = [ "Sam Dobson <1309834+samdobson@users.noreply.github.com>",]
