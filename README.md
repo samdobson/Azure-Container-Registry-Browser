@@ -1,31 +1,26 @@
 <!-- markdownlint-disable MD026 -->
-# Azure Container Registry Browser
-
-https://shields.io/pypi/pyversions/acr-browser
 [![Python versions](https://shields.io/pypi/pyversions/acr-browser)](https://badge.fury.io/py/acr-browser)
 [![PyPI version](https://badge.fury.io/py/acr-browser.svg)](https://pypi.org/project/acr-browser/)
 
-As a terminal-based user interface for managing container images and artifacts in [Azure Container Registry](https://azure.microsoft.com/en-us/services/container-registry/).
+# Azure Container Registry Browser
+
+A terminal-based user interface for managing container images and artifacts in Azure Container Registry.
 
 ![home_view](media/interface.png)
 
-:rocket: This project owes a huge debt of gratitude to the fantastic [Azure Key Vault Browser](https://github.com/chelnak/azure-keyvault-browser), on which it is based, and of course, to the underlying packages that make both of these projects possible: [textual](https://github.com/willmcgugan/textual) and [rich](https://github.com/willmcgugan/rich)!
-
 ## Installation
-
-`acr-browser` requires Python 3.9 or later.
 
 ```bash
 pip install acr-browser
 ```
 
-Once the app is installed you can run the application from your terminal with the `acr` command.
+Once the app is installed you can run the application from your terminal with the command:
 
 ```bash
 acr
 ```
 
-Alternatively, you can run with Docker:
+Alternatively, you can skip the above, and instead run with Docker:
 
 ```bash
 docker run --rm -it --volume $HOME:/app --volume $HOME/.azure:/root/.azure ghcr.io/samdobson/acr-browser:latest
@@ -53,6 +48,10 @@ Alternatively you can create a config file at `~/.acr-browser.toml`:
 
 registry = ""
 ```
+
+## Credits
+
+:rocket: This project owes a huge debt of gratitude to the fantastic [Azure Key Vault Browser](https://github.com/chelnak/azure-keyvault-browser), from which it is forked, and of course, to the underlying technologies that make both of these projects possible: [textual](https://github.com/willmcgugan/textual) and [rich](https://github.com/willmcgugan/rich)!
 
 ## Contributing
 
