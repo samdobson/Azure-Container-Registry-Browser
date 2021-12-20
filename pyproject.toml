@@ -29,6 +29,7 @@ azure-identity = "^1.7.1"
 azure-containerregistry = "^1.0.0b7"
 pyperclip = "^1.8.2"
 aiohttp = "^3.8.1"
+aiodocker = "^0.21.0"
 
 [tool.poetry.dev-dependencies]
 black = "^21.9b0"

@@ -1,4 +1,16 @@
 [[package]]
+name = "aiodocker"
+version = "0.21.0"
+description = "Docker API client for asyncio"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+aiohttp = ">=3.6"
+typing-extensions = ">=3.6.5"
+
+[[package]]
 name = "aiohttp"
 version = "3.8.1"
 description = "Async http client/server framework (asyncio)"
@@ -755,9 +767,13 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "df0c645e02f1d07c83284f43b862e47ce7c649408781cf0e2c7aab2d574f418c"
+content-hash = "af91db53322427c1c056d032253f64a244f9339bf464030e80a82827a076e191"
 
 [metadata.files]
+aiodocker = [
+    {file = "aiodocker-0.21.0-py3-none-any.whl", hash = "sha256:6fe00135bb7dc40a407669d3157ecdfd856f3737d939df54f40a479d40cf7bdc"},
+    {file = "aiodocker-0.21.0.tar.gz", hash = "sha256:1f2e6db6377195962bb676d4822f6e3a0c525e1b5d60b8ebbab68230bff3d227"},
+]
 aiohttp = [
     {file = "aiohttp-3.8.1-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:1ed0b6477896559f17b9eaeb6d38e07f7f9ffe40b9f0f9627ae8b9926ae260a8"},
     {file = "aiohttp-3.8.1-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:7dadf3c307b31e0e61689cbf9e06be7a867c563d5a63ce9dca578f956609abf8"},
