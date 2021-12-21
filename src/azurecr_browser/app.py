@@ -221,4 +221,13 @@ def run(config: str | None, debug: bool) -> None:
     if debug:
         app.run(log="azurecr-browser.log", title=title)
     else:
-        app.run()
+        try:
+            app.run(title=title)
+        except Exception:
+            from rich.console import Console
+
+            console = Console()
+            console.print(
+                "💥 Oh dear, [italic yellow]something went wrong![/italic yellow] "
+                "For more information, re-run using the [red]--debug[/red] option."
+            )
