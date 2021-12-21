@@ -7,7 +7,6 @@ from typing import Any, MutableMapping
 import aiodocker
 import click
 from azure.containerregistry import RepositoryProperties
-from click import Path
 from textual.app import App
 from textual.keys import Keys
 from textual.reactive import Reactive
@@ -31,8 +30,9 @@ from .widgets.flash import FlashMessageType
 
 class ACRBrowser(App):
 
-    config_path: str | None = None
+    acr_name: str = ""
     config: MutableMapping[str, Any]
+    config_path: str | None = None
     client: ContainerRegistry
     docker: aiodocker.Docker | None = None
     show_help: Reactive[bool] = Reactive(False)
@@ -47,7 +47,8 @@ class ACRBrowser(App):
 
         self.log("Starting app")
         self.config = get_config(self.config_path)
-        self.acr_name = self.config["registry"]
+        if not self.acr_name:
+            self.acr_name = self.config["registry"]
         self.log(f"Registry name: {self.acr_name}")
         self.client = ContainerRegistry(self.acr_name)
 
@@ -194,30 +195,24 @@ class ACRBrowser(App):
 
 
 @click.command(help=CLI_HELP)
-@click.option(
-    "--config",
-    default=None,
-    envvar="ACR_BROWSER_CONFIG",
-    type=Path(file_okay=True, dir_okay=False, exists=False, resolve_path=True),
-    help="Explicitly override the config that will be used by azurecr-browser.",
-)
+@click.argument("registry", nargs=1, required=False)
 @click.option(
     "--debug",
     is_flag=True,
     help="Enable debug mode.",
 )
 @click.version_option(__version__)
-def run(config: str | None, debug: bool) -> None:
+def run(registry: str, debug: bool) -> None:
     """The entry point.
 
     Args:
-        config (str | None): The config file to use.
+        registry (str): The container registry to browse.
         debug (bool): Enable debug mode.
     """
 
     title = "ACR Browser"
     app = ACRBrowser
-    app.config_path = config
+    app.acr_name = registry
     if debug:
         app.run(log="azurecr-browser.log", title=title)
     else:

@@ -48,7 +48,7 @@ def set_config(path: str) -> MutableMapping[str, Any]:
     ask = Ask()
 
     console.print(
-        "It looks like this is the first time you are using this app.. lets add some configuration before we start :smiley:\n"  # noqa: E501
+        "Which ACR registry would you like to manage? :smiley:\n"  # noqa: E501
     )
     config["registry"] = ask.question(
         f"[b][{styles.GREY}]Container Registry Name[/][/]", validation=acr_name
