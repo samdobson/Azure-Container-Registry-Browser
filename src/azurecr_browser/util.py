@@ -1,4 +1,7 @@
+import locale
 from datetime import datetime
+
+locale.setlocale(locale.LC_TIME, "")
 
 
 def replace_last(string: str, find: str, replace: str) -> str:
@@ -25,7 +28,7 @@ def format_datetime(dt: datetime) -> str:
         dt (datetime): The datetime object to format.
 
     Returns:
-        str: The formatted datetime.
+        str: The formatted datetime, taking into account the user's locale.
     """
 
-    return dt.strftime("%Y-%m-%d %H:%M:%S")
+    return dt.strftime("%x %X")
